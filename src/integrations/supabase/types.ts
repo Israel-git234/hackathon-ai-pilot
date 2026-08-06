@@ -704,6 +704,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_invite_preview: {
+        Args: { _code: string }
+        Returns: {
+          member_count: number
+          project_id: string
+          project_name: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -723,6 +731,7 @@ export type Database = {
         Args: { _task_id: string; _user_id: string }
         Returns: boolean
       }
+      join_project_by_invite: { Args: { _code: string }; Returns: string }
       owns_conversation: {
         Args: { _conversation_id: string; _user_id: string }
         Returns: boolean
