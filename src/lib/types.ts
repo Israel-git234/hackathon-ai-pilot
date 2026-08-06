@@ -38,7 +38,7 @@ export interface ProjectMember {
   user_id: string;
   member_role: "leader" | "member";
   joined_at: string;
-  profile?: Profile;
+  profile?: Profile | undefined;
 }
 
 export interface Milestone {
@@ -80,7 +80,7 @@ export interface TaskComment {
   user_id: string;
   content: string;
   created_at: string;
-  profile?: Profile;
+  profile?: Profile | undefined;
 }
 
 export interface DailyUpdate {
@@ -92,7 +92,7 @@ export interface DailyUpdate {
   planned: string;
   blockers: string;
   created_at: string;
-  profile?: Profile;
+  profile?: Profile | undefined;
 }
 
 export interface Message {
@@ -103,7 +103,7 @@ export interface Message {
   content: string;
   reactions: Record<string, string[]>;
   created_at: string;
-  profile?: Profile;
+  profile?: Profile | undefined;
 }
 
 export interface SharedNote {
@@ -122,8 +122,8 @@ export interface ProjectFile {
   content_type: string | null;
   size_bytes: number | null;
   created_at: string;
-  profile?: Profile;
-  signed_url?: string;
+  profile?: Profile | undefined;
+  signed_url?: string | undefined;
 }
 
 export interface AppNotification {

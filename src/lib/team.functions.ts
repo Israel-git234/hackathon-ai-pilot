@@ -147,12 +147,12 @@ export const getSharedNote = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     await requireMembership(supabase, data.projectId, userId);
-    const { data } = await supabase
+    const { data: note } = await supabase
       .from("shared_notes")
       .select("*")
       .eq("project_id", data.projectId)
       .maybeSingle();
-    return data ?? null;
+    return note ?? null;
   });
 
 export const saveSharedNote = createServerFn({ method: "POST" })

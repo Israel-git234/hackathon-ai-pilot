@@ -7,6 +7,7 @@ import {
   requireMembership,
   signedLogoUrl,
 } from "./db.server";
+import type { Database } from "@/integrations/supabase/types";
 import type { Milestone, ProjectMember } from "./types";
 
 export const listHackathons = createServerFn({ method: "POST" })
@@ -87,6 +88,7 @@ export const getProject = createServerFn({ method: "POST" })
     const profiles = await profilesById(supabase, (membersRes.data ?? []).map((m) => m.user_id));
     const members: ProjectMember[] = (membersRes.data ?? []).map((m) => ({
       ...m,
+      member_role: m.member_role as ProjectMember["member_role"],
       profile: profiles.get(m.user_id),
     }));
 
@@ -161,8 +163,14 @@ export const updateProject = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     await requireLeadership(supabase, data.projectId, userId);
-    const { projectId, ...patch } = data;
-    const { error } = await supabase.from("projects").update(patch).eq("id", projectId);
+    const update: Database["public"]["Tables"]["projects"]["Update"] = {};
+    if (data.name !== undefined) update.name = data.name;
+    if (data.description !== undefined) update.description = data.description;
+    if (data.idea !== undefined) update.idea = data.idea;
+    if (data.hackathon_name !== undefined) update.hackathon_name = data.hackathon_name;
+    if (data.deadline !== undefined) update.deadline = data.deadline;
+    if (data.archived !== undefined) update.archived = data.archived;
+    const { error } = await supabase.from("projects").update(update).eq("id", data.projectId);
     if (error) throw new Error(error.message);
     return { ok: true };
   });
@@ -271,8 +279,12 @@ export const updateMilestone = createServerFn({ method: "POST" })
       .single();
     if (!existing) throw new Error("Milestone not found.");
     await requireMembership(supabase, existing.project_id, userId);
-    const { id, ...patch } = data;
-    const { error } = await supabase.from("milestones").update(patch).eq("id", id);
+    const update: Database["public"]["Tables"]["milestones"]["Update"] = {};
+    if (data.title !== undefined) update.title = data.title;
+    if (data.description !== undefined) update.description = data.description;
+    if (data.due_date !== undefined) update.due_date = data.due_date;
+    if (data.done !== undefined) update.done = data.done;
+    const { error } = await supabase.from("milestones").update(update).eq("id", data.id);
     if (error) throw new Error(error.message);
     return { ok: true };
   });

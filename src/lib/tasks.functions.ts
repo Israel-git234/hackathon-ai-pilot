@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { notifyUsers, profilesById, requireMembership } from "./db.server";
+import type { Database } from "@/integrations/supabase/types";
 import type { Task, TaskComment } from "./types";
 
 const taskStatus = z.enum(["backlog", "todo", "in_progress", "review", "done"]);
@@ -122,11 +123,21 @@ export const updateTask = createServerFn({ method: "POST" })
     await requireMembership(supabase, existing.project_id, userId);
 
     const { id, ...patch } = data;
-    const update: Record<string, unknown> = { ...patch };
-    if (patch.status === "done" && existing.status !== "done") {
-      update.completed_at = new Date().toISOString();
-    } else if (patch.status && patch.status !== "done") {
-      update.completed_at = null;
+    const update: Database["public"]["Tables"]["tasks"]["Update"] = {};
+    if (patch.title !== undefined) update.title = patch.title;
+    if (patch.description !== undefined) update.description = patch.description;
+    if (patch.priority !== undefined) update.priority = patch.priority;
+    if (patch.labels !== undefined) update.labels = patch.labels;
+    if (patch.assignee_id !== undefined) update.assignee_id = patch.assignee_id;
+    if (patch.due_date !== undefined) update.due_date = patch.due_date;
+    if (patch.milestone_id !== undefined) update.milestone_id = patch.milestone_id;
+    if (patch.status !== undefined) {
+      update.status = patch.status;
+      if (patch.status === "done" && existing.status !== "done") {
+        update.completed_at = new Date().toISOString();
+      } else if (patch.status !== "done") {
+        update.completed_at = null;
+      }
     }
 
     const { error } = await supabase.from("tasks").update(update).eq("id", id);

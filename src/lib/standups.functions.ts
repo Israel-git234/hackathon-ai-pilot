@@ -36,14 +36,14 @@ export const getMyStandup = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     await requireMembership(supabase, data.projectId, userId);
-    const { data } = await supabase
+    const { data: existing } = await supabase
       .from("daily_updates")
       .select("*")
       .eq("project_id", data.projectId)
       .eq("user_id", userId)
       .eq("update_date", data.date)
       .maybeSingle();
-    return data ?? null;
+    return existing ?? null;
   });
 
 export const saveStandup = createServerFn({ method: "POST" })
