@@ -20,6 +20,7 @@ import { Route as AuthenticatedProjectsProjectIdRouteRouteImport } from './route
 import { Route as AuthenticatedProjectsNewRouteImport } from './routes/_authenticated/projects/new'
 import { Route as AuthenticatedProjectsProjectIdIndexRouteImport } from './routes/_authenticated/projects/$projectId/index'
 import { Route as AuthenticatedProjectsProjectIdBoardRouteImport } from './routes/_authenticated/projects/$projectId/board'
+import { Route as AuthenticatedProjectsProjectIdMentorRouteImport } from './routes/_authenticated/projects/$projectId/mentor'
 import { Route as AuthenticatedProjectsProjectIdPlannerRouteImport } from './routes/_authenticated/projects/$projectId/planner'
 import { Route as AuthenticatedProjectsProjectIdStandupRouteImport } from './routes/_authenticated/projects/$projectId/standup'
 import { Route as AuthenticatedProjectsProjectIdTeamRouteImport } from './routes/_authenticated/projects/$projectId/team'
@@ -82,6 +83,12 @@ const AuthenticatedProjectsProjectIdBoardRoute =
     path: '/board',
     getParentRoute: () => AuthenticatedProjectsProjectIdRouteRoute,
   } as any)
+const AuthenticatedProjectsProjectIdMentorRoute =
+  AuthenticatedProjectsProjectIdMentorRouteImport.update({
+    id: '/mentor',
+    path: '/mentor',
+    getParentRoute: () => AuthenticatedProjectsProjectIdRouteRoute,
+  } as any)
 const AuthenticatedProjectsProjectIdPlannerRoute =
   AuthenticatedProjectsProjectIdPlannerRouteImport.update({
     id: '/planner',
@@ -111,6 +118,7 @@ export interface FileRoutesByFullPath {
   '/projects/$projectId': typeof AuthenticatedProjectsProjectIdRouteRouteWithChildren
   '/projects/new': typeof AuthenticatedProjectsNewRoute
   '/projects/$projectId/board': typeof AuthenticatedProjectsProjectIdBoardRoute
+  '/projects/$projectId/mentor': typeof AuthenticatedProjectsProjectIdMentorRoute
   '/projects/$projectId/planner': typeof AuthenticatedProjectsProjectIdPlannerRoute
   '/projects/$projectId/standup': typeof AuthenticatedProjectsProjectIdStandupRoute
   '/projects/$projectId/team': typeof AuthenticatedProjectsProjectIdTeamRoute
@@ -125,6 +133,7 @@ export interface FileRoutesByTo {
   '/join/$code': typeof JoinCodeRoute
   '/projects/new': typeof AuthenticatedProjectsNewRoute
   '/projects/$projectId/board': typeof AuthenticatedProjectsProjectIdBoardRoute
+  '/projects/$projectId/mentor': typeof AuthenticatedProjectsProjectIdMentorRoute
   '/projects/$projectId/planner': typeof AuthenticatedProjectsProjectIdPlannerRoute
   '/projects/$projectId/standup': typeof AuthenticatedProjectsProjectIdStandupRoute
   '/projects/$projectId/team': typeof AuthenticatedProjectsProjectIdTeamRoute
@@ -142,6 +151,7 @@ export interface FileRoutesById {
   '/_authenticated/projects/$projectId': typeof AuthenticatedProjectsProjectIdRouteRouteWithChildren
   '/_authenticated/projects/new': typeof AuthenticatedProjectsNewRoute
   '/_authenticated/projects/$projectId/board': typeof AuthenticatedProjectsProjectIdBoardRoute
+  '/_authenticated/projects/$projectId/mentor': typeof AuthenticatedProjectsProjectIdMentorRoute
   '/_authenticated/projects/$projectId/planner': typeof AuthenticatedProjectsProjectIdPlannerRoute
   '/_authenticated/projects/$projectId/standup': typeof AuthenticatedProjectsProjectIdStandupRoute
   '/_authenticated/projects/$projectId/team': typeof AuthenticatedProjectsProjectIdTeamRoute
@@ -159,6 +169,7 @@ export interface FileRouteTypes {
     | '/projects/$projectId'
     | '/projects/new'
     | '/projects/$projectId/board'
+    | '/projects/$projectId/mentor'
     | '/projects/$projectId/planner'
     | '/projects/$projectId/standup'
     | '/projects/$projectId/team'
@@ -173,6 +184,7 @@ export interface FileRouteTypes {
     | '/join/$code'
     | '/projects/new'
     | '/projects/$projectId/board'
+    | '/projects/$projectId/mentor'
     | '/projects/$projectId/planner'
     | '/projects/$projectId/standup'
     | '/projects/$projectId/team'
@@ -189,6 +201,7 @@ export interface FileRouteTypes {
     | '/_authenticated/projects/$projectId'
     | '/_authenticated/projects/new'
     | '/_authenticated/projects/$projectId/board'
+    | '/_authenticated/projects/$projectId/mentor'
     | '/_authenticated/projects/$projectId/planner'
     | '/_authenticated/projects/$projectId/standup'
     | '/_authenticated/projects/$projectId/team'
@@ -282,6 +295,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProjectsProjectIdBoardRouteImport
       parentRoute: typeof AuthenticatedProjectsProjectIdRouteRoute
     }
+    '/_authenticated/projects/$projectId/mentor': {
+      id: '/_authenticated/projects/$projectId/mentor'
+      path: '/mentor'
+      fullPath: '/projects/$projectId/mentor'
+      preLoaderRoute: typeof AuthenticatedProjectsProjectIdMentorRouteImport
+      parentRoute: typeof AuthenticatedProjectsProjectIdRouteRoute
+    }
     '/_authenticated/projects/$projectId/planner': {
       id: '/_authenticated/projects/$projectId/planner'
       path: '/planner'
@@ -308,6 +328,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedProjectsProjectIdRouteRouteChildren {
   AuthenticatedProjectsProjectIdBoardRoute: typeof AuthenticatedProjectsProjectIdBoardRoute
+  AuthenticatedProjectsProjectIdMentorRoute: typeof AuthenticatedProjectsProjectIdMentorRoute
   AuthenticatedProjectsProjectIdPlannerRoute: typeof AuthenticatedProjectsProjectIdPlannerRoute
   AuthenticatedProjectsProjectIdStandupRoute: typeof AuthenticatedProjectsProjectIdStandupRoute
   AuthenticatedProjectsProjectIdTeamRoute: typeof AuthenticatedProjectsProjectIdTeamRoute
@@ -318,6 +339,8 @@ const AuthenticatedProjectsProjectIdRouteRouteChildren: AuthenticatedProjectsPro
   {
     AuthenticatedProjectsProjectIdBoardRoute:
       AuthenticatedProjectsProjectIdBoardRoute,
+    AuthenticatedProjectsProjectIdMentorRoute:
+      AuthenticatedProjectsProjectIdMentorRoute,
     AuthenticatedProjectsProjectIdPlannerRoute:
       AuthenticatedProjectsProjectIdPlannerRoute,
     AuthenticatedProjectsProjectIdStandupRoute:
@@ -361,13 +384,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
