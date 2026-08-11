@@ -83,16 +83,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "HackPilot is the AI-powered workspace for hackathon teams: plan with AI, manage tasks, run standups, and generate winning submissions in one place.",
+          "Plan with AI, run your task board, keep standups tight, and generate a winning submission — HackPilot is the workspace built for hackathon teams.",
       },
       { property: "og:title", content: "HackPilot — AI Workspace for Hackathon Teams" },
       {
         property: "og:description",
         content:
-          "Plan, build, collaborate, and submit hackathon projects with an AI-powered workspace.",
+          "Plan with AI, run your task board, keep standups tight, and generate a winning submission — HackPilot is the workspace built for hackathon teams.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "HackPilot — AI Workspace for Hackathon Teams" },
+      { name: "twitter:description", content: "Plan with AI, run your task board, keep standups tight, and generate a winning submission — HackPilot is the workspace built for hackathon teams." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/3baeed98fa3e2f01648360239d1ea3ea/id-preview-16e3fd47--9031f093-34f0-4797-9111-5c884bc74aee.lovable.app-1786455106343.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/3baeed98fa3e2f01648360239d1ea3ea/id-preview-16e3fd47--9031f093-34f0-4797-9111-5c884bc74aee.lovable.app-1786455106343.png" },
     ],
     links: [
       {

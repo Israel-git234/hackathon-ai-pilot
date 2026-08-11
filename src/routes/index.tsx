@@ -25,7 +25,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "One workspace for hackathon teams: AI planning, tasks, collaboration, progress tracking, and submission assistance.",
+          "Plan with AI, run your task board, keep standups tight, and generate a winning submission — HackPilot is the workspace built for hackathon teams.",
       },
     ],
   }),
