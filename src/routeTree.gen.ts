@@ -22,6 +22,7 @@ import { Route as AuthenticatedProjectsProjectIdIndexRouteImport } from './route
 import { Route as AuthenticatedProjectsProjectIdBoardRouteImport } from './routes/_authenticated/projects/$projectId/board'
 import { Route as AuthenticatedProjectsProjectIdMentorRouteImport } from './routes/_authenticated/projects/$projectId/mentor'
 import { Route as AuthenticatedProjectsProjectIdPlannerRouteImport } from './routes/_authenticated/projects/$projectId/planner'
+import { Route as AuthenticatedProjectsProjectIdProgressRouteImport } from './routes/_authenticated/projects/$projectId/progress'
 import { Route as AuthenticatedProjectsProjectIdStandupRouteImport } from './routes/_authenticated/projects/$projectId/standup'
 import { Route as AuthenticatedProjectsProjectIdTeamRouteImport } from './routes/_authenticated/projects/$projectId/team'
 
@@ -95,6 +96,12 @@ const AuthenticatedProjectsProjectIdPlannerRoute =
     path: '/planner',
     getParentRoute: () => AuthenticatedProjectsProjectIdRouteRoute,
   } as any)
+const AuthenticatedProjectsProjectIdProgressRoute =
+  AuthenticatedProjectsProjectIdProgressRouteImport.update({
+    id: '/progress',
+    path: '/progress',
+    getParentRoute: () => AuthenticatedProjectsProjectIdRouteRoute,
+  } as any)
 const AuthenticatedProjectsProjectIdStandupRoute =
   AuthenticatedProjectsProjectIdStandupRouteImport.update({
     id: '/standup',
@@ -120,6 +127,7 @@ export interface FileRoutesByFullPath {
   '/projects/$projectId/board': typeof AuthenticatedProjectsProjectIdBoardRoute
   '/projects/$projectId/mentor': typeof AuthenticatedProjectsProjectIdMentorRoute
   '/projects/$projectId/planner': typeof AuthenticatedProjectsProjectIdPlannerRoute
+  '/projects/$projectId/progress': typeof AuthenticatedProjectsProjectIdProgressRoute
   '/projects/$projectId/standup': typeof AuthenticatedProjectsProjectIdStandupRoute
   '/projects/$projectId/team': typeof AuthenticatedProjectsProjectIdTeamRoute
   '/projects/$projectId/': typeof AuthenticatedProjectsProjectIdIndexRoute
@@ -135,6 +143,7 @@ export interface FileRoutesByTo {
   '/projects/$projectId/board': typeof AuthenticatedProjectsProjectIdBoardRoute
   '/projects/$projectId/mentor': typeof AuthenticatedProjectsProjectIdMentorRoute
   '/projects/$projectId/planner': typeof AuthenticatedProjectsProjectIdPlannerRoute
+  '/projects/$projectId/progress': typeof AuthenticatedProjectsProjectIdProgressRoute
   '/projects/$projectId/standup': typeof AuthenticatedProjectsProjectIdStandupRoute
   '/projects/$projectId/team': typeof AuthenticatedProjectsProjectIdTeamRoute
   '/projects/$projectId': typeof AuthenticatedProjectsProjectIdIndexRoute
@@ -153,6 +162,7 @@ export interface FileRoutesById {
   '/_authenticated/projects/$projectId/board': typeof AuthenticatedProjectsProjectIdBoardRoute
   '/_authenticated/projects/$projectId/mentor': typeof AuthenticatedProjectsProjectIdMentorRoute
   '/_authenticated/projects/$projectId/planner': typeof AuthenticatedProjectsProjectIdPlannerRoute
+  '/_authenticated/projects/$projectId/progress': typeof AuthenticatedProjectsProjectIdProgressRoute
   '/_authenticated/projects/$projectId/standup': typeof AuthenticatedProjectsProjectIdStandupRoute
   '/_authenticated/projects/$projectId/team': typeof AuthenticatedProjectsProjectIdTeamRoute
   '/_authenticated/projects/$projectId/': typeof AuthenticatedProjectsProjectIdIndexRoute
@@ -171,6 +181,7 @@ export interface FileRouteTypes {
     | '/projects/$projectId/board'
     | '/projects/$projectId/mentor'
     | '/projects/$projectId/planner'
+    | '/projects/$projectId/progress'
     | '/projects/$projectId/standup'
     | '/projects/$projectId/team'
     | '/projects/$projectId/'
@@ -186,6 +197,7 @@ export interface FileRouteTypes {
     | '/projects/$projectId/board'
     | '/projects/$projectId/mentor'
     | '/projects/$projectId/planner'
+    | '/projects/$projectId/progress'
     | '/projects/$projectId/standup'
     | '/projects/$projectId/team'
     | '/projects/$projectId'
@@ -203,6 +215,7 @@ export interface FileRouteTypes {
     | '/_authenticated/projects/$projectId/board'
     | '/_authenticated/projects/$projectId/mentor'
     | '/_authenticated/projects/$projectId/planner'
+    | '/_authenticated/projects/$projectId/progress'
     | '/_authenticated/projects/$projectId/standup'
     | '/_authenticated/projects/$projectId/team'
     | '/_authenticated/projects/$projectId/'
@@ -309,6 +322,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProjectsProjectIdPlannerRouteImport
       parentRoute: typeof AuthenticatedProjectsProjectIdRouteRoute
     }
+    '/_authenticated/projects/$projectId/progress': {
+      id: '/_authenticated/projects/$projectId/progress'
+      path: '/progress'
+      fullPath: '/projects/$projectId/progress'
+      preLoaderRoute: typeof AuthenticatedProjectsProjectIdProgressRouteImport
+      parentRoute: typeof AuthenticatedProjectsProjectIdRouteRoute
+    }
     '/_authenticated/projects/$projectId/standup': {
       id: '/_authenticated/projects/$projectId/standup'
       path: '/standup'
@@ -330,6 +350,7 @@ interface AuthenticatedProjectsProjectIdRouteRouteChildren {
   AuthenticatedProjectsProjectIdBoardRoute: typeof AuthenticatedProjectsProjectIdBoardRoute
   AuthenticatedProjectsProjectIdMentorRoute: typeof AuthenticatedProjectsProjectIdMentorRoute
   AuthenticatedProjectsProjectIdPlannerRoute: typeof AuthenticatedProjectsProjectIdPlannerRoute
+  AuthenticatedProjectsProjectIdProgressRoute: typeof AuthenticatedProjectsProjectIdProgressRoute
   AuthenticatedProjectsProjectIdStandupRoute: typeof AuthenticatedProjectsProjectIdStandupRoute
   AuthenticatedProjectsProjectIdTeamRoute: typeof AuthenticatedProjectsProjectIdTeamRoute
   AuthenticatedProjectsProjectIdIndexRoute: typeof AuthenticatedProjectsProjectIdIndexRoute
@@ -343,6 +364,8 @@ const AuthenticatedProjectsProjectIdRouteRouteChildren: AuthenticatedProjectsPro
       AuthenticatedProjectsProjectIdMentorRoute,
     AuthenticatedProjectsProjectIdPlannerRoute:
       AuthenticatedProjectsProjectIdPlannerRoute,
+    AuthenticatedProjectsProjectIdProgressRoute:
+      AuthenticatedProjectsProjectIdProgressRoute,
     AuthenticatedProjectsProjectIdStandupRoute:
       AuthenticatedProjectsProjectIdStandupRoute,
     AuthenticatedProjectsProjectIdTeamRoute:
