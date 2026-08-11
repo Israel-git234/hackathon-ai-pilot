@@ -65,7 +65,16 @@ function Submission() {
             <div className="mt-4">
               <p className="font-display text-3xl font-bold">{score.score}/100</p>
               <Progress value={score.score} className="mt-2" />
-              <p className="mt-3 text-sm text-muted-foreground">{score.summary}</p>
+              <ul className="mt-3 space-y-1 text-sm text-muted-foreground">
+                {score.breakdown.map((b) => (
+                  <li key={b.criterion}>
+                    <span className="font-medium text-foreground">
+                      {b.criterion}: {b.score}/{b.max}
+                    </span>{" "}
+                    — {b.note}
+                  </li>
+                ))}
+              </ul>
               <ul className="mt-3 list-disc space-y-1 pl-5 text-sm">
                 {score.recommendations.map((r) => (
                   <li key={r}>{r}</li>
