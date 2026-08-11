@@ -24,6 +24,7 @@ import { Route as AuthenticatedProjectsProjectIdMentorRouteImport } from './rout
 import { Route as AuthenticatedProjectsProjectIdPlannerRouteImport } from './routes/_authenticated/projects/$projectId/planner'
 import { Route as AuthenticatedProjectsProjectIdProgressRouteImport } from './routes/_authenticated/projects/$projectId/progress'
 import { Route as AuthenticatedProjectsProjectIdStandupRouteImport } from './routes/_authenticated/projects/$projectId/standup'
+import { Route as AuthenticatedProjectsProjectIdSubmissionRouteImport } from './routes/_authenticated/projects/$projectId/submission'
 import { Route as AuthenticatedProjectsProjectIdTeamRouteImport } from './routes/_authenticated/projects/$projectId/team'
 
 const IndexRoute = IndexRouteImport.update({
@@ -108,6 +109,12 @@ const AuthenticatedProjectsProjectIdStandupRoute =
     path: '/standup',
     getParentRoute: () => AuthenticatedProjectsProjectIdRouteRoute,
   } as any)
+const AuthenticatedProjectsProjectIdSubmissionRoute =
+  AuthenticatedProjectsProjectIdSubmissionRouteImport.update({
+    id: '/submission',
+    path: '/submission',
+    getParentRoute: () => AuthenticatedProjectsProjectIdRouteRoute,
+  } as any)
 const AuthenticatedProjectsProjectIdTeamRoute =
   AuthenticatedProjectsProjectIdTeamRouteImport.update({
     id: '/team',
@@ -129,6 +136,7 @@ export interface FileRoutesByFullPath {
   '/projects/$projectId/planner': typeof AuthenticatedProjectsProjectIdPlannerRoute
   '/projects/$projectId/progress': typeof AuthenticatedProjectsProjectIdProgressRoute
   '/projects/$projectId/standup': typeof AuthenticatedProjectsProjectIdStandupRoute
+  '/projects/$projectId/submission': typeof AuthenticatedProjectsProjectIdSubmissionRoute
   '/projects/$projectId/team': typeof AuthenticatedProjectsProjectIdTeamRoute
   '/projects/$projectId/': typeof AuthenticatedProjectsProjectIdIndexRoute
 }
@@ -145,6 +153,7 @@ export interface FileRoutesByTo {
   '/projects/$projectId/planner': typeof AuthenticatedProjectsProjectIdPlannerRoute
   '/projects/$projectId/progress': typeof AuthenticatedProjectsProjectIdProgressRoute
   '/projects/$projectId/standup': typeof AuthenticatedProjectsProjectIdStandupRoute
+  '/projects/$projectId/submission': typeof AuthenticatedProjectsProjectIdSubmissionRoute
   '/projects/$projectId/team': typeof AuthenticatedProjectsProjectIdTeamRoute
   '/projects/$projectId': typeof AuthenticatedProjectsProjectIdIndexRoute
 }
@@ -164,6 +173,7 @@ export interface FileRoutesById {
   '/_authenticated/projects/$projectId/planner': typeof AuthenticatedProjectsProjectIdPlannerRoute
   '/_authenticated/projects/$projectId/progress': typeof AuthenticatedProjectsProjectIdProgressRoute
   '/_authenticated/projects/$projectId/standup': typeof AuthenticatedProjectsProjectIdStandupRoute
+  '/_authenticated/projects/$projectId/submission': typeof AuthenticatedProjectsProjectIdSubmissionRoute
   '/_authenticated/projects/$projectId/team': typeof AuthenticatedProjectsProjectIdTeamRoute
   '/_authenticated/projects/$projectId/': typeof AuthenticatedProjectsProjectIdIndexRoute
 }
@@ -183,6 +193,7 @@ export interface FileRouteTypes {
     | '/projects/$projectId/planner'
     | '/projects/$projectId/progress'
     | '/projects/$projectId/standup'
+    | '/projects/$projectId/submission'
     | '/projects/$projectId/team'
     | '/projects/$projectId/'
   fileRoutesByTo: FileRoutesByTo
@@ -199,6 +210,7 @@ export interface FileRouteTypes {
     | '/projects/$projectId/planner'
     | '/projects/$projectId/progress'
     | '/projects/$projectId/standup'
+    | '/projects/$projectId/submission'
     | '/projects/$projectId/team'
     | '/projects/$projectId'
   id:
@@ -217,6 +229,7 @@ export interface FileRouteTypes {
     | '/_authenticated/projects/$projectId/planner'
     | '/_authenticated/projects/$projectId/progress'
     | '/_authenticated/projects/$projectId/standup'
+    | '/_authenticated/projects/$projectId/submission'
     | '/_authenticated/projects/$projectId/team'
     | '/_authenticated/projects/$projectId/'
   fileRoutesById: FileRoutesById
@@ -336,6 +349,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProjectsProjectIdStandupRouteImport
       parentRoute: typeof AuthenticatedProjectsProjectIdRouteRoute
     }
+    '/_authenticated/projects/$projectId/submission': {
+      id: '/_authenticated/projects/$projectId/submission'
+      path: '/submission'
+      fullPath: '/projects/$projectId/submission'
+      preLoaderRoute: typeof AuthenticatedProjectsProjectIdSubmissionRouteImport
+      parentRoute: typeof AuthenticatedProjectsProjectIdRouteRoute
+    }
     '/_authenticated/projects/$projectId/team': {
       id: '/_authenticated/projects/$projectId/team'
       path: '/team'
@@ -352,6 +372,7 @@ interface AuthenticatedProjectsProjectIdRouteRouteChildren {
   AuthenticatedProjectsProjectIdPlannerRoute: typeof AuthenticatedProjectsProjectIdPlannerRoute
   AuthenticatedProjectsProjectIdProgressRoute: typeof AuthenticatedProjectsProjectIdProgressRoute
   AuthenticatedProjectsProjectIdStandupRoute: typeof AuthenticatedProjectsProjectIdStandupRoute
+  AuthenticatedProjectsProjectIdSubmissionRoute: typeof AuthenticatedProjectsProjectIdSubmissionRoute
   AuthenticatedProjectsProjectIdTeamRoute: typeof AuthenticatedProjectsProjectIdTeamRoute
   AuthenticatedProjectsProjectIdIndexRoute: typeof AuthenticatedProjectsProjectIdIndexRoute
 }
@@ -368,6 +389,8 @@ const AuthenticatedProjectsProjectIdRouteRouteChildren: AuthenticatedProjectsPro
       AuthenticatedProjectsProjectIdProgressRoute,
     AuthenticatedProjectsProjectIdStandupRoute:
       AuthenticatedProjectsProjectIdStandupRoute,
+    AuthenticatedProjectsProjectIdSubmissionRoute:
+      AuthenticatedProjectsProjectIdSubmissionRoute,
     AuthenticatedProjectsProjectIdTeamRoute:
       AuthenticatedProjectsProjectIdTeamRoute,
     AuthenticatedProjectsProjectIdIndexRoute:
