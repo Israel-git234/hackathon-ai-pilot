@@ -6,7 +6,9 @@ export { AI_MODEL };
 export function getGateway() {
   const key = process.env["LOVABLE_API_KEY"];
   if (!key) throw new Error("AI is not configured for this workspace.");
-  return createLovableAiGatewayProvider(key);
+  // structuredOutputs: schema-based generation (plans, readiness scores) needs
+  // strict json_schema; without it the model returns free-form JSON and fails validation.
+  return createLovableAiGatewayProvider(key, undefined, { structuredOutputs: true });
 }
 
 export function friendlyAiError(error: unknown): Error {
