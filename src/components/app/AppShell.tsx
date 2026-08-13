@@ -143,16 +143,15 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
                 );
               })}
               <Link
-                to="/projects/$projectId/settings"
-                params={{ projectId: activeProject.id }}
+                to="/settings"
                 onClick={onNavigate}
                 className={cn(
                   "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-foreground",
-                  pathname.endsWith("/settings") && "bg-sidebar-accent text-foreground",
+                  pathname === "/settings" && "bg-sidebar-accent text-foreground",
                 )}
               >
                 <Settings className="h-4 w-4" />
-                Project settings
+                Settings
               </Link>
             </nav>
           </ScrollArea>
