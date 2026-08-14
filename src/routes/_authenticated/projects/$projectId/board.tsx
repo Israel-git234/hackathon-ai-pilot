@@ -196,24 +196,35 @@ function Board() {
       }
     >
       <div className="overflow-x-auto px-4 py-6 sm:px-6">
-        <div className="flex min-w-max gap-4">
+        <div className="flex min-w-max gap-4 pb-4">
           {TASK_STATUSES.map((column) => {
             const columnTasks = (tasks ?? []).filter((t) => t.status === column.id);
             return (
-              <div key={column.id} className="w-72 shrink-0">
-                <div className="mb-3 flex items-center justify-between">
-                  <p className="text-sm font-semibold">{column.label}</p>
-                  <Badge variant="secondary">{columnTasks.length}</Badge>
+              <div
+                key={column.id}
+                className="flex w-72 shrink-0 flex-col rounded-xl border border-border bg-card/40 p-3"
+              >
+                <div className="mb-3 flex items-center justify-between px-1">
+                  <div className="flex items-center gap-2">
+                    <span className={cn("h-2 w-2 rounded-full", COLUMN_DOT[column.id])} />
+                    <p className="text-sm font-semibold">{column.label}</p>
+                  </div>
+                  <span className="rounded-md bg-secondary px-1.5 py-0.5 text-xs text-muted-foreground">
+                    {columnTasks.length}
+                  </span>
                 </div>
                 <div className="space-y-2">
                   {columnTasks.map((t) => (
-                    <Card key={t.id} className="border-border bg-card p-3">
+                    <Card
+                      key={t.id}
+                      className="group border-border bg-card p-3 transition-colors hover:border-primary/50"
+                    >
                       <div className="flex items-start justify-between gap-2">
-                        <p className="text-sm font-medium">{t.title}</p>
+                        <p className="text-sm leading-snug font-medium">{t.title}</p>
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-6 w-6 shrink-0"
+                          className="h-6 w-6 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 hover:text-destructive"
                           aria-label="Delete task"
                           onClick={() => remove.mutate(t.id)}
                         >
@@ -226,37 +237,49 @@ function Board() {
                         </p>
                       ) : null}
                       <div className="mt-3 flex items-center justify-between gap-2">
-                        <Badge variant="secondary" className="font-normal">
+                        <span
+                          className={cn(
+                            "rounded-md border px-1.5 py-0.5 text-[10px] font-medium tracking-wide uppercase",
+                            PRIORITY_STYLE[t.priority] ?? PRIORITY_STYLE["medium"],
+                          )}
+                        >
                           {t.priority}
-                        </Badge>
-                        {t.assignee ? (
-                          <Avatar className="h-6 w-6">
-                            <AvatarFallback className="bg-primary/15 text-[10px] text-primary">
-                              {initials(t.assignee.display_name)}
-                            </AvatarFallback>
-                          </Avatar>
-                        ) : null}
+                        </span>
+                        <div className="flex items-center gap-1.5">
+                          {t.assignee ? (
+                            <Avatar className="h-6 w-6">
+                              <AvatarFallback className="bg-primary/15 text-[10px] text-primary">
+                                {initials(t.assignee.display_name)}
+                              </AvatarFallback>
+                            </Avatar>
+                          ) : null}
+                          <Select
+                            value={t.status}
+                            onValueChange={(v) =>
+                              move.mutate({ id: t.id, status: v as TaskStatus })
+                            }
+                          >
+                            <SelectTrigger
+                              className="h-7 w-auto gap-1 border-none bg-transparent px-1.5 text-xs text-muted-foreground hover:text-foreground"
+                              aria-label="Move task"
+                            >
+                              <MoveRight className="h-3.5 w-3.5" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {TASK_STATUSES.map((s) => (
+                                <SelectItem key={s.id} value={s.id}>
+                                  Move to {s.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
                       </div>
-                      <Select
-                        value={t.status}
-                        onValueChange={(v) => move.mutate({ id: t.id, status: v as TaskStatus })}
-                      >
-                        <SelectTrigger className="mt-3 h-8 text-xs">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {TASK_STATUSES.map((s) => (
-                            <SelectItem key={s.id} value={s.id}>
-                              Move to {s.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
                     </Card>
                   ))}
                   {columnTasks.length === 0 ? (
-                    <div className="rounded-lg border border-dashed border-border p-6 text-center text-xs text-muted-foreground">
-                      Empty
+                    <div className="rounded-lg border border-dashed border-border/70 p-6 text-center text-xs text-muted-foreground">
+                      Nothing here
                     </div>
                   ) : null}
                 </div>
@@ -265,6 +288,7 @@ function Board() {
           })}
         </div>
       </div>
+
     </AppShell>
   );
 }
