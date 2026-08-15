@@ -110,4 +110,4 @@ User profile settings for managing avatars, bios, and account preferences.
 
 ## Live Demo
 
-Try HackPilot live at: [https://hackathon-ai-pilot.lovable.app](https://hackathon-ai-pilot.lovable.app)
+Try HackPilot live at: [https://hackathon-ai-pilot.lovable.app](https://hackpilotai.lovable.app))
