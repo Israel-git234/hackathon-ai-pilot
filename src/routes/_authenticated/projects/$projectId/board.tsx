@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
-import { Plus, Trash2 } from "lucide-react";
+import { MoveRight, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { AppShell, initials } from "@/components/app/AppShell";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -26,6 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 import { PRIORITIES, TASK_STATUSES } from "@/lib/constants";
 import { getProject } from "@/lib/projects.functions";
 import { createTask, deleteTask, listTasks, updateTask } from "@/lib/tasks.functions";
@@ -44,6 +45,21 @@ export const Route = createFileRoute("/_authenticated/projects/$projectId/board"
 });
 
 const UNASSIGNED = "__unassigned__";
+
+const COLUMN_DOT: Record<string, string> = {
+  backlog: "bg-muted-foreground",
+  todo: "bg-blue",
+  in_progress: "bg-primary",
+  review: "bg-warning",
+  done: "bg-success",
+};
+
+const PRIORITY_STYLE: Record<string, string> = {
+  low: "border-border text-muted-foreground",
+  medium: "border-blue/40 text-blue",
+  high: "border-warning/40 text-warning",
+  urgent: "border-destructive/40 text-destructive",
+};
 
 function Board() {
   const { projectId } = Route.useParams();
